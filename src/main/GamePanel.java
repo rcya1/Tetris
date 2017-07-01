@@ -23,6 +23,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 	private StateManager stateManager;
 
 	private static final int FPS = 60;
+	private int frameCount;
 
 	GamePanel()
 	{
@@ -93,6 +94,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 		long wait;
 		while(running)
 		{
+			frameCount++;
 			start = System.nanoTime();
 			update();
 			draw();
@@ -103,7 +105,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 			wait = targetTime - elapsed / 1000000;
 			if(wait < 0)
 			{
-				System.out.println("We are lagging by " + -wait + " milliseconds.");
+				System.out.println("We are lagging by " + -wait + " milliseconds on frame " + frameCount + ".");
 				wait = 5;
 			}
 			try
