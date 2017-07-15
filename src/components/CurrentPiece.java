@@ -24,7 +24,7 @@ class CurrentPiece
 		pieceHitbox = piece.getArray();
 
 		column = 5 - (pieceHitbox[0].length / 2);
-		row = -2;
+		row = 0;
 
 		this.level = level;
 	}
@@ -59,7 +59,7 @@ class CurrentPiece
 				if(pieceHitbox[row][column])
 				{
 					g2d.fillRect((this.column + column) * tileLength,
-							(this.row + row) * tileLength, tileLength, tileLength);
+							(this.row + row - 2) * tileLength, tileLength, tileLength);
 				}
 			}
 		}
@@ -76,7 +76,7 @@ class CurrentPiece
 				if(pieceHitbox[row][column])
 				{
 					g2d.fillRect((this.column + column) * tileLength,
-							(this.row + row) * tileLength, tileLength, tileLength);
+							(this.row + row - 2) * tileLength, tileLength, tileLength);
 				}
 			}
 		}

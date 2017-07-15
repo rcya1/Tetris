@@ -49,7 +49,7 @@ public class Board
 	public void init()
 	{
 		numOfColumns = 10;
-		numOfRows = 20;
+		numOfRows = 22;
 
 		board = new int[numOfColumns][numOfRows];
 
@@ -294,7 +294,7 @@ public class Board
 			{
 				g2d.setColor(Piece.getColor(board[column][row]));
 				if(linesToBeCleared.contains(row)) g2d.setColor(Color.WHITE);
-				g2d.fillRect(column * tileLength, row * tileLength, tileLength, tileLength);
+				g2d.fillRect(column * tileLength, (row - 2) * tileLength, tileLength, tileLength);
 			}
 		}
 
