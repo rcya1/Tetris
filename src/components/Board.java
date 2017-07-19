@@ -37,6 +37,7 @@ public class Board
 	private boolean moveLeft;
 	private boolean moveRight;
 	private boolean moveDown;
+
 	private boolean rotateClock;
 	private boolean rotateCounter;
 	private boolean hardDrop;
@@ -83,34 +84,39 @@ public class Board
 
 	public void update()
 	{
-		if(state.equals("PLAY"))
+		if(!state.equals("GAME_OVER"))
 		{
-			this.points += currentPiece.update(frame);
+			if(state.equals("PLAY"))
+			{
+				this.points += currentPiece.update(frame);
+			}
+
+			tSpin = false;
+
+			handleKeyActions();
+
+			ghostPiece.setRow(currentPiece.getRow());
+			ghostPiece.setColumn(currentPiece.getColumn());
+			ghostPiece.setPieceHitbox(currentPiece.getPieceHitbox());
+			ghostPiece.hardDrop(board);
+
+			checkBounds();
+
+			handleCollisions();
+			handleLineClearing();
+
+			checkGameOver();
+
+			level = 1 + (linesCleared / 10.0);
+
+			if(tSpin) System.out.println("T-Spin Detected");
+
+			frame++;
+
+			if(movementTimer > 0) movementTimer--;
+			if(rotateTimer > 0) rotateTimer--;
+			if(hardDropTimer > 0) hardDropTimer--;
 		}
-
-		tSpin = false;
-
-		handleKeyActions();
-
-		ghostPiece.setRow(currentPiece.getRow());
-		ghostPiece.setColumn(currentPiece.getColumn());
-		ghostPiece.setPieceHitbox(currentPiece.getPieceHitbox());
-		ghostPiece.hardDrop(board);
-
-		checkBounds();
-
-		handleCollisions();
-		handleLineClearing();
-
-		level = 1 + (linesCleared / 10.0);
-
-		if(tSpin) System.out.println("T-Spin Detected");
-
-		frame++;
-
-		if(movementTimer > 0) movementTimer--;
-		if(rotateTimer > 0) rotateTimer--;
-		if(hardDropTimer > 0) hardDropTimer--;
 	}
 
 	private void handleCollisions()
@@ -283,6 +289,28 @@ public class Board
 		}
 
 		points += (int) level * levelPoints;
+	}
+
+	private void checkGameOver()
+	{
+		if(state.equals("PLAY"))
+		{
+			for(int col = 0; col < board.length; col++)
+			{
+				if(board[col][0] != 0 || board[col][1] != 0)
+				{
+					state = "GAME_OVER";
+					for(int column = 0; column < board.length; column++)
+					{
+						for(int row = 0; row < board[0].length; row++)
+						{
+							board[column][row] = board[column][row] != 0 ? -1 : 0;
+						}
+					}
+					break;
+				}
+			}
+		}
 	}
 
 	public void draw(Graphics2D g2d)
