@@ -16,8 +16,6 @@ public class PlayState extends State
 
 	private Board board;
 
-	private boolean paused;
-
 	public PlayState(StateManager stateManager)
 	{
 		this.stateManager = stateManager;
@@ -28,19 +26,18 @@ public class PlayState extends State
 	{
 		board = new Board();
 		board.init();
-
-		paused = false;
 	}
 
 	public void update()
 	{
-		if(!paused) board.update();
+		if(!stateManager.PAUSED) board.update();
 	}
 
 	public void draw(Graphics2D g2d)
 	{
 		g2d.setColor(Color.BLACK);
 		g2d.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
+
 		AffineTransform transform = g2d.getTransform();
 		g2d.translate(100, 0);
 		board.draw(g2d);
@@ -114,18 +111,12 @@ public class PlayState extends State
 				}
 			}
 		}
-
-		if(paused)
-		{
-			g2d.setColor(new Color(255, 255, 255, 100));
-			g2d.fillRect(0, 0, GamePanel.WIDTH, GamePanel.HEIGHT);
-		}
 	}
 
 	public void keyPressed(int key)
 	{
 		board.keyPressed(key);
-		if(key == KeyEvent.VK_ESCAPE) paused = !paused;
+		if(key == KeyEvent.VK_ESCAPE) stateManager.PAUSED = !stateManager.PAUSED;
 	}
 
 	public void keyReleased(int key)

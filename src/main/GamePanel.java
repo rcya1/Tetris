@@ -1,6 +1,8 @@
 package main;
 
 import state.StateManager;
+import state.states.PlayState;
+import utility.ImageHelper;
 
 import javax.swing.*;
 import java.awt.*;
@@ -48,6 +50,15 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 	private void draw()
 	{
 		stateManager.draw(g2d);
+		if(stateManager.PAUSED)
+		{
+			image = ImageHelper.blur(image, 2);if(stateManager.PAUSED)
+
+			g2d.setColor(Color.WHITE);
+			String text = "Game Paused";
+			int width = g2d.getFontMetrics().stringWidth(text);
+			g2d.drawString(text, (GamePanel.WIDTH - width) / 2, GamePanel.HEIGHT / 2);
+		}
 	}
 
 	private void drawToScreen()
@@ -105,7 +116,7 @@ public class GamePanel extends JPanel implements Runnable, KeyListener
 			wait = targetTime - elapsed / 1000000;
 			if(wait < 0)
 			{
-				System.out.println("We are lagging by " + -wait + " milliseconds on frame " + frameCount + ".");
+//				System.out.println("We are lagging by " + -wait + " milliseconds on frame " + frameCount + ".");
 				wait = 5;
 			}
 			try

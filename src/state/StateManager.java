@@ -15,11 +15,15 @@ public class StateManager
 	private final State[] states;
 	private int currentState;
 
+	public boolean PAUSED;
+
 	public StateManager()
 	{
 		states = new State[NUMBER_OF_STATES];
 		currentState = MENU_STATE;
 		loadState(currentState);
+
+		PAUSED = false;
 	}
 
 	public void update()
