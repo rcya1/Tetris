@@ -6,7 +6,6 @@ import state.StateManager;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 public class MenuState extends State
 {

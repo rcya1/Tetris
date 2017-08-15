@@ -1,7 +1,6 @@
 package main;
 
 import state.StateManager;
-import state.states.PlayState;
 import utility.ImageHelper;
 
 import javax.swing.*;

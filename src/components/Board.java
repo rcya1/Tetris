@@ -1,7 +1,5 @@
 package components;
 
-import main.GamePanel;
-
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -492,6 +490,9 @@ public class Board
 			break;
 		case KeyEvent.VK_C:
 			pieceSwitch = true;
+			break;
+		case KeyEvent.VK_R:
+			init();
 			break;
 		}
 	}
